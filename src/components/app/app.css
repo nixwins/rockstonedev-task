@@ -1,0 +1,23 @@
+body{
+    box-sizing: border-box;
+
+
+}
+#root{
+    width:100% !important;
+    overflow: hidden;
+}
+.app{
+    width:100vw;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background-color: #555;
+    min-height: 100vh;
+    /* padding:5px; */
+}
+@media screen and (min-width:688px){
+   span{
+       font-size:40px;
+   }
+}

@@ -1,0 +1,27 @@
+.add-item-panel-form{
+    width:100%;
+}
+.form-row{
+    width:100%;
+    margin:5px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.task-message{
+    height: 120px;
+    width: 65%;
+    font-size: 1.5rem;
+    padding: 0;
+}
+
+.task-message:focus{
+    outline:none;
+}
+
+.btn-send{
+
+    height: 40px;
+    width:85px;
+    margin-left:10px;
+}
