@@ -1,36 +1,31 @@
-import React, { Component } from 'react';
+import React, { useState } from 'react';
 import AddItemPanel from '../add-item-panel';
 import Clock from '../clock';
 import TodoList from '../todo-list';
 
 import './app.css';
 
+const App = () => {
 
-export default class App extends Component {
+    const [idx, setIdx] = useState(10000);
+    const [taskList, setTaskList] = useState([]);
 
-    state = {
-        taskList: []
+    const addItem = (text) => {
+        const newItem = { id: idx, text };
+        setIdx(idx + 1);
+
+        setTaskList([...taskList, newItem]);
+        console.log("ADD", taskList)
     }
 
-    addItem = (text) => {
-        this.setState((state) => {
-            const newItem = { text };
-            return {
-                taskList: [...this.state.taskList, newItem]
-            };
-        });
-    }
+    return (
+        <div className="app">
+            <AddItemPanel addItem={addItem} />
+            <TodoList taskList={taskList} />
+            {/* <Clock /> */}
+        </div>
 
-    render() {
-
-        const { taskList } = this.state;
-        return (
-            <div className="app">
-                <AddItemPanel addItem={this.addItem} />
-                <TodoList taskList={taskList} />
-                {/* <Clock /> */}
-            </div>
-
-        );
-    }
+    );
 }
+
+export default App;

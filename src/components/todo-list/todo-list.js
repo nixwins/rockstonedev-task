@@ -1,18 +1,16 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import TodoListItem from '../todo-list-item'
 
 const TodoList = ({ taskList }) => {
 
-    console.log(taskList)
-    const items = taskList.map(({ text }) => {
+    const items = taskList.map((item) => {
         return (
-            <li className="list-group-item">
-                <TodoList text={text} />
+            <li className="list-group-item" key={item.id}>
+                <TodoListItem text={item.text} />
             </li>
         );
     });
 
-    if (!items) return <span>empty list</span>
     return (
         <ul className="list-group">
             {items}
