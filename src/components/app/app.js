@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import AddItemPanel from '../add-item-panel';
 import Clock from '../clock';
 import TodoList from '../todo-list';
@@ -9,47 +9,62 @@ const App = () => {
 
     const [uniqueKey, setUniqueKey] = useState(10000);
     const [taskList, setTaskList] = useState([]);
-    const [initClientX, setInitClientX] = useState(0);
-    const [endClientX, setEndClientX] = useState(0);
-    const [initClientY, setInitClientY] = useState(0);
-    const [endClientY, setEndClientY] = useState(0);
+    const [initClientX, setInitClientX] = useState(null);
+    const [endClientX, setEndClientX] = useState(null);
+    const [initClientY, setInitClientY] = useState(null);
+    const [endClientY, setEndClientY] = useState(null);
     const [isSwitch, setIsSwitch] = useState(false);
+
+    // useEffect(() => {
+    //     window.addEventListener("touchstart", handleTouchStart);
+    //     window.addEventListener("touchmove", handleToucheMove);
+    //     window.addEventListener("touchend", handleTouchEnd);
+    // });
 
     const handleTouchStart = (event) => {
         const touch = event.nativeEvent.touches[0];
         setInitClientX(touch.clientX);
         setInitClientY(touch.clientY);
-        // console.log("Start Y", touch.clientY);
     };
 
     const handleToucheMove = (event) => {
         const touch = event.nativeEvent.touches[0];
         setEndClientX(touch.clientX)
         setEndClientY(touch.clientY);
-
     };
 
     const handleTouchEnd = (event) => {
-        swipe();
-    }
 
-    const swipe = () => {
+        if (!initClientX || !initClientY) return;
 
-        const threshold = 150, //required min distance traveled to be considered swipe
-            restraint = 100; // maximum distance allowed at the same time in perpendicular direction
+        const xDiff = endClientX - initClientX;
+        const yDiff = endClientY - initClientY;
 
-        const distX = endClientX - initClientX;
-        const distY = endClientY - initClientY;
-
-        if (Math.abs(distX) >= threshold && distY <= restraint) {
-            console.log("swipe")
-            setIsSwitch(true)
-
+        if (Math.abs(xDiff) > Math.abs(yDiff)) {
+            //right to left
+            if (xDiff > 150 && xDiff < 400) {
+                console.log("xDIF", xDiff, "endX", endClientX)
+                swipeRight();
+            }
+            else if (Math.abs(xDiff) < 400 && Math.abs(xDiff) > 150 && endClientX) {
+                console.log("LEFT xDIF", xDiff, "LeftendX", endClientX)
+                swipeLeft();
+            }
         }
 
-        setInitClientX(0);
-        setEndClientY(0);
+        setInitClientX(null);
+        setInitClientY(null);
+        setEndClientX(null);
+        setEndClientY(null);
+    }
 
+    const swipeRight = () => {
+        setIsSwitch(!isSwitch)
+        console.log("RIGHT")
+    }
+    const swipeLeft = () => {
+        setIsSwitch(!isSwitch)
+        console.log("LEFT")
     }
 
     const addItem = (text) => {
@@ -60,29 +75,28 @@ const App = () => {
         console.log("ADD", taskList)
     }
 
-    const contentComponents = [AddItemPanel, TodoList];
     const clock = <Clock />
-
-    const wrapper = <ContentWrapper components={contentComponents} />
+    const wrapper = <ContentWrapper addItem={addItem} taskList={taskList} />
     const visibleComponent = isSwitch ? clock : wrapper;
+
     return (
         <div className="app"
             onTouchStart={handleTouchStart}
             onTouchMove={handleToucheMove}
             onTouchEnd={handleTouchEnd}>
+
             {visibleComponent}
-            {/* <AddItemPanel addItem={addItem} />
-            <TodoList taskList={taskList} />
-            <Clock /> */}
+
         </div>
 
     );
 }
 
-const ContentWrapper = ({ components }) => {
+const ContentWrapper = ({ addItem, taskList }) => {
     return (
         <>
-            {components}
+            <AddItemPanel addItem={addItem} />
+            <TodoList taskList={taskList} />
         </>
     )
 }
