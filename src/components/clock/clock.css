@@ -1,11 +1,13 @@
 .clock{
+    display: flex;
+    min-width: 100vw;
     font-size :32px;
     color:#fff;
     transition: width 3s ;
-    min-height: 100vh;
-    display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
+    background-color: tomato;
+    min-height: 100vh;
+   
 }
-

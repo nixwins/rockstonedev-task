@@ -5,10 +5,11 @@ import './todo-list.css';
 
 const TodoList = ({ taskList }) => {
 
-    const items = taskList.map((item) => {
+    const items = taskList.map(({ id, text }) => {
+
         return (
-            <li className="list-group-item" key={item.id}>
-                <TodoListItem text={item.text} />
+            <li className='list-group-item' key={id}>
+                <TodoListItem text={text} />
             </li>
         );
     });

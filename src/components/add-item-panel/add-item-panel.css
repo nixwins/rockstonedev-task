@@ -1,8 +1,13 @@
 .add-item-panel-form{
     width:100%;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 .form-row{
     width:100%;
+    max-width:1050px;
     margin:5px;
     display: flex;
     justify-content: center;

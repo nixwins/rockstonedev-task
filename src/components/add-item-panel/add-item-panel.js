@@ -20,7 +20,7 @@ const AddItemPanel = ({ addItem }) => {
             <div className="form-row">
                 <textarea className="task-message" onInput={onLabelChange}></textarea>
                 <button
-                    className="btn-send">
+                    className="btn btn-success btn-send">
                     Send
                 </button>
             </div>

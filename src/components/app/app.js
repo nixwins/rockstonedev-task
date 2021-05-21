@@ -8,18 +8,25 @@ import './app.css';
 const App = () => {
 
     const [uniqueKey, setUniqueKey] = useState(10000);
-    const [taskList, setTaskList] = useState([]);
+    const [taskList, setTaskList] = useState([
+        // { id: uniqueKey, text: "Assignments to the 'interval' variable from inside React Hook " },
+        // { id: uniqueKey, text: "Assignments to the 'interval' variable from inside React Hook " },
+        // { id: uniqueKey, text: "Assignments to the 'interval' variable from inside React Hook " },
+        // { id: uniqueKey, text: "Assignments to the 'interval' variable from inside React Hook " },
+        // { id: uniqueKey, text: "Assignments to the 'interval' variable from inside React Hook " },
+        // { id: uniqueKey, text: "Lorem ipsum dolor sit amet consectetur, adipisicing elit. Aspernatur veritatis qui vitae? Deserunt facilis voluptas corporis corrupti. Nisi quo at accusantium numquam consequuntur, pariatur, qui saepe perferendis, iure unde repellendus. " },
+        // { id: uniqueKey, text: "Otherwise, you can move this variable directly inside useEffect Compiled " },
+        // { id: uniqueKey, text: "Lorem ipsum dolor sit amet consectetur, adipisicing elit. Aspernatur veritatis qui vitae? Deserunt facilis voluptas corporis corrupti. Nisi quo at accusantium numquam consequuntur, pariatur, qui saepe perferendis, iure unde repellendus. " },
+        // { id: uniqueKey, text: "Lorem ipsum dolor sit amet consectetur, adipisicing elit. Aspernatur veritatis qui vitae? Deserunt facilis voluptas corporis corrupti. Nisi quo at accusantium numquam consequuntur, pariatur, qui saepe perferendis, iure unde repellendus. " },
+        // { id: uniqueKey, text: "Lorem ipsum dolor sit amet consectetur, adipisicing elit. Aspernatur veritatis qui vitae? Deserunt facilis voluptas corporis corrupti. Nisi quo at accusantium numquam consequuntur, pariatur, qui saepe perferendis, iure unde repellendus. " },
+        // { id: uniqueKey, text: "Lorem ipsum dolor sit amet consectetur, adipisicing elit. Aspernatur veritatis qui vitae? Deserunt facilis voluptas corporis corrupti. Nisi quo at accusantium numquam consequuntur, pariatur, qui saepe perferendis, iure unde repellendus. " },
+
+    ]);
     const [initClientX, setInitClientX] = useState(null);
     const [endClientX, setEndClientX] = useState(null);
     const [initClientY, setInitClientY] = useState(null);
     const [endClientY, setEndClientY] = useState(null);
     const [isSwitch, setIsSwitch] = useState(false);
-
-    // useEffect(() => {
-    //     window.addEventListener("touchstart", handleTouchStart);
-    //     window.addEventListener("touchmove", handleToucheMove);
-    //     window.addEventListener("touchend", handleTouchEnd);
-    // });
 
     const handleTouchStart = (event) => {
         const touch = event.nativeEvent.touches[0];
@@ -71,31 +78,41 @@ const App = () => {
         const newItem = { id: uniqueKey, text };
         setUniqueKey(uniqueKey + 1);
 
-        setTaskList([...taskList, newItem]);
-        console.log("ADD", taskList)
+        setTaskList([newItem, ...taskList]);
     }
 
-    const clock = <Clock />
-    const wrapper = <ContentWrapper addItem={addItem} taskList={taskList} />
+    const visibleStyle = { display: "block" };
+
+    const clock = (
+        <div className="content-wrapper" style={visibleStyle} >
+            <Clock style={visibleStyle} />
+        </div>
+    );
+
+    const wrapper = (
+        <div className="content-wrapper" style={visibleStyle} >
+            <ContentWrapper addItem={addItem} taskList={taskList} />
+        </div>);
+
     const visibleComponent = isSwitch ? clock : wrapper;
+
 
     return (
         <div className="app"
             onTouchStart={handleTouchStart}
             onTouchMove={handleToucheMove}
             onTouchEnd={handleTouchEnd}>
-
             {visibleComponent}
-
         </div>
 
     );
 }
 
+
 const ContentWrapper = ({ addItem, taskList }) => {
     return (
         <>
-            <AddItemPanel addItem={addItem} />
+            <AddItemPanel addItem={addItem} lastItemId={taskList[taskList.length - 1]} />
             <TodoList taskList={taskList} />
         </>
     )

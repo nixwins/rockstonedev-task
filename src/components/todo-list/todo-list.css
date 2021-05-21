@@ -1,3 +1,16 @@
-.list-group-item{
-    transition:  width 3s;
+.list-group{
+    min-width: 100vw;
 }
+
+@media screen and (min-width:688px){
+    .list-group{
+        align-items: center;
+    justify-content: center;
+      width:100%;
+     
+    }
+    .list-group-item{
+        width:100%;
+        max-width: 1050px;
+    }
+ }
